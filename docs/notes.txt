@@ -1,0 +1,5 @@
+notes
+- rename get_ to find_ everywhere
+- names uppercase now
+- ask about the cache thing
+- fix tests later

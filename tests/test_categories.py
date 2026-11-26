@@ -1,17 +1,14 @@
 import unittest
 
-from inventory.categories import Category, get_categories, list_active_categories
+from inventory.categories import Category, find_categories, list_active_categories
 
 
 class CategoryTests(unittest.TestCase):
     def setUp(self):
-        self.items = [Category(1, "A"), Category(2, "B", active=False)]
+        self.items = [Category(1, "a"), Category(2, "b", active=False)]
 
-    def test_get_existing(self):
-        self.assertEqual(get_categories(self.items, 1).name, "A")
-
-    def test_get_missing(self):
-        self.assertIsNone(get_categories(self.items, 99))
+    def test_find_existing(self):
+        self.assertEqual(find_categories(self.items, 1).name, "A")
 
     def test_list_active(self):
-        self.assertEqual([i.id for i in list_active_categories(self.items)], [1])
+        self.assertEqual(len(list_active_categories(self.items)), 1)

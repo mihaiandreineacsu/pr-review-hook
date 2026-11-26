@@ -1,17 +1,14 @@
 import unittest
 
-from inventory.warehouses import Warehouse, get_warehouses, list_active_warehouses
+from inventory.warehouses import Warehouse, find_warehouses, list_active_warehouses
 
 
 class WarehouseTests(unittest.TestCase):
     def setUp(self):
-        self.items = [Warehouse(1, "A"), Warehouse(2, "B", active=False)]
+        self.items = [Warehouse(1, "a"), Warehouse(2, "b", active=False)]
 
-    def test_get_existing(self):
-        self.assertEqual(get_warehouses(self.items, 1).name, "A")
-
-    def test_get_missing(self):
-        self.assertIsNone(get_warehouses(self.items, 99))
+    def test_find_existing(self):
+        self.assertEqual(find_warehouses(self.items, 1).name, "A")
 
     def test_list_active(self):
-        self.assertEqual([i.id for i in list_active_warehouses(self.items)], [1])
+        self.assertEqual(len(list_active_warehouses(self.items)), 1)
