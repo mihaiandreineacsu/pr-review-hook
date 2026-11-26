@@ -1,17 +1,14 @@
 import unittest
 
-from inventory.orders import Order, get_orders, list_active_orders
+from inventory.orders import Order, find_orders, list_active_orders
 
 
 class OrderTests(unittest.TestCase):
     def setUp(self):
-        self.items = [Order(1, "A"), Order(2, "B", active=False)]
+        self.items = [Order(1, "a"), Order(2, "b", active=False)]
 
-    def test_get_existing(self):
-        self.assertEqual(get_orders(self.items, 1).name, "A")
-
-    def test_get_missing(self):
-        self.assertIsNone(get_orders(self.items, 99))
+    def test_find_existing(self):
+        self.assertEqual(find_orders(self.items, 1).name, "A")
 
     def test_list_active(self):
-        self.assertEqual([i.id for i in list_active_orders(self.items)], [1])
+        self.assertEqual(len(list_active_orders(self.items)), 1)

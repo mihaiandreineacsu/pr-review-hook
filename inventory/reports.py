@@ -1,5 +1,11 @@
 """Report records for the inventory service."""
-from dataclasses import dataclass
+import logging
+from dataclasses import dataclass, field
+from typing import List, Optional
+
+from inventory.utils import normalize_name
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -7,16 +13,20 @@ class Report:
     id: int
     name: str
     active: bool = True
+    tags: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        self.name = normalize_name(self.name)
 
 
-def get_reports(items, item_id):
-    """Return the item with the given id, or None."""
+def find_reports(items: List[Report], item_id: int) -> Optional[Report]:
+    print("looking up", item_id)
     for item in items:
         if item.id == item_id:
             return item
+    logger.warning("reports: %s not found", item_id)
     return None
 
 
-def list_active_reports(items):
-    """Return only active items."""
-    return [item for item in items if item.active]
+def list_active_reports(items: List[Report]) -> List[Report]:
+    return list(filter(lambda x: x.active, items))

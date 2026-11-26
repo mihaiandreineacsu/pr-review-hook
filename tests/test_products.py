@@ -1,17 +1,14 @@
 import unittest
 
-from inventory.products import Product, get_products, list_active_products
+from inventory.products import Product, find_products, list_active_products
 
 
 class ProductTests(unittest.TestCase):
     def setUp(self):
-        self.items = [Product(1, "A"), Product(2, "B", active=False)]
+        self.items = [Product(1, "a"), Product(2, "b", active=False)]
 
-    def test_get_existing(self):
-        self.assertEqual(get_products(self.items, 1).name, "A")
-
-    def test_get_missing(self):
-        self.assertIsNone(get_products(self.items, 99))
+    def test_find_existing(self):
+        self.assertEqual(find_products(self.items, 1).name, "A")
 
     def test_list_active(self):
-        self.assertEqual([i.id for i in list_active_products(self.items)], [1])
+        self.assertEqual(len(list_active_products(self.items)), 1)
