@@ -1,0 +1,1 @@
+"""Inventory service core records."""
